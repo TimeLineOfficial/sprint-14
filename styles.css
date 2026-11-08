@@ -1,0 +1,432 @@
+/* ==========================================================================
+   ApexTrack Enterprise - The Walking Skeleton (Sprint 14 MVP Stylesheet)
+   Aesthetic: Raw Structural Skeleton / Brutalist Engineering Theme
+   High-contrast, functional borders, zero decorative bloat
+   ========================================================================== */
+
+:root {
+  --bg-color: #0d1117;
+  --surface-color: #161b22;
+  --border-color: #30363d;
+  --border-strong: #8b949e;
+  --text-main: #c9d1d9;
+  --text-bright: #f0f6fc;
+  --text-muted: #8b949e;
+
+  --accent-cyan: #58a6ff;
+  --accent-green: #3fb950;
+  --accent-red: #f85149;
+  --accent-yellow: #d29922;
+
+  --font-mono: 'JetBrains Mono', 'Courier New', Courier, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body.skeleton-theme {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.font-mono { font-family: var(--font-mono); }
+.text-danger { color: var(--accent-red); font-weight: bold; }
+.text-success { color: var(--accent-green); font-weight: bold; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+
+/* Structural Header */
+.skeleton-header {
+  background: var(--surface-color);
+  border-bottom: 2px solid var(--border-color);
+  padding: 1rem 1.5rem;
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.system-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  letter-spacing: -0.02em;
+}
+
+.system-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.auth-status-pill {
+  background: #000;
+  border: 1px solid var(--border-strong);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+/* Violent Rejection Alert Banner */
+.rejection-banner {
+  background: #2a0b0d;
+  border: 2px solid var(--accent-red);
+  color: #ffb4ab;
+  padding: 1rem 1.5rem;
+  margin: 1rem auto;
+  max-width: 1400px;
+  width: calc(100% - 3rem);
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.rejection-header {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ff8b7d;
+  margin-bottom: 0.3rem;
+}
+
+.rejection-body {
+  font-size: 0.85rem;
+  margin-bottom: 0.8rem;
+}
+
+/* Navigation / Route Guards */
+.skeleton-nav {
+  background: #000;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  overflow-x: auto;
+}
+
+.nav-btn {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  border-color: var(--text-main);
+  color: var(--text-bright);
+}
+
+.nav-btn.active {
+  background: var(--border-color);
+  color: var(--text-bright);
+  border-color: var(--accent-cyan);
+}
+
+/* Main Layout */
+.skeleton-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skeleton-box {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  padding: 1.25rem 1.5rem;
+}
+
+.box-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.box-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+/* Auth Grid */
+.auth-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.8fr;
+  gap: 1.5rem;
+}
+
+.auth-form-card, .token-inspector-card {
+  background: #000;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+}
+
+.card-title {
+  font-size: 0.85rem;
+  color: var(--accent-yellow);
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid #222;
+  padding-bottom: 0.4rem;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.form-row.full-width {
+  grid-column: 1 / -1;
+}
+
+.skeleton-input {
+  background: #0d1117;
+  border: 1px solid var(--border-color);
+  color: var(--text-bright);
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  width: 100%;
+}
+
+.skeleton-input:focus {
+  outline: 1px solid var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.skeleton-btn {
+  background: var(--surface-color);
+  border: 1px solid var(--border-strong);
+  color: var(--text-bright);
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.skeleton-btn:hover:not(:disabled) {
+  background: var(--border-color);
+}
+
+.skeleton-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #1f385c;
+  border-color: var(--accent-cyan);
+  color: #79c0ff;
+}
+
+.btn-danger {
+  background: #3c1417;
+  border-color: var(--accent-red);
+  color: #ff7b72;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.token-box {
+  background: #07090d;
+  border: 1px solid #1f242c;
+  padding: 0.75rem;
+  color: #79c0ff;
+  word-break: break-all;
+  max-height: 120px;
+  overflow-y: auto;
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.token-claims {
+  background: #07090d;
+  border: 1px solid #1f242c;
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  color: #7ee787;
+  white-space: pre-wrap;
+}
+
+/* Route Views */
+.route-view {
+  display: none;
+}
+
+.route-view.active {
+  display: block;
+}
+
+/* Topology Diagram */
+.topology-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+}
+
+.topo-node {
+  background: #000;
+  border: 1px solid var(--border-strong);
+  padding: 1rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.topo-node h4 {
+  color: var(--accent-cyan);
+  margin-bottom: 0.5rem;
+}
+
+.topo-arrow {
+  color: var(--accent-yellow);
+  font-weight: bold;
+}
+
+/* Data Table */
+.pipeline-card, .table-card {
+  background: #000;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+}
+
+.table-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.skeleton-table th, .skeleton-table td {
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.skeleton-table th {
+  background: #11141a;
+  color: var(--accent-cyan);
+}
+
+.skeleton-table tr:hover td {
+  background: #161b22;
+}
+
+.status-line {
+  background: #04101e;
+  border: 1px solid var(--accent-cyan);
+  color: #79c0ff;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+/* CI/CD Flow */
+.cicd-pipeline-flow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.cicd-step {
+  background: #000;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  flex: 1;
+  min-width: 220px;
+}
+
+.step-badge {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+}
+
+.badge-ok { background: #238636; color: #fff; }
+.cicd-arrow { color: var(--accent-cyan); font-weight: bold; }
+
+.code-box {
+  background: #05070a;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  color: #79c0ff;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+}
+
+/* Footer */
+.skeleton-footer {
+  background: var(--surface-color);
+  border-top: 1px solid var(--border-color);
+  padding: 1rem 1.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .auth-grid {
+    grid-template-columns: 1fr;
+  }
+}

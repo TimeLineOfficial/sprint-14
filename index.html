@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApexTrack Enterprise — Sprint 14 Walking Skeleton (MVP)</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💀</text></svg>">
+</head>
+<body class="skeleton-theme">
+
+  <!-- Walking Skeleton Structural Header -->
+  <header class="skeleton-header">
+    <div class="header-inner">
+      <div>
+        <h1 class="system-title">APEXTRACK ENTERPRISE :: THE WALKING SKELETON</h1>
+        <div class="system-meta font-mono">
+          Sprint 14 MVP | Phase 1: Core Infra | Phase 2: Auth Perimeter | Phase 3: CI/CD Pipeline
+        </div>
+      </div>
+      <div class="auth-status-pill font-mono" id="global-auth-pill">
+        [ STATUS: <span id="auth-status-text" class="text-danger">UNAUTHENTICATED</span> ]
+      </div>
+    </div>
+  </header>
+
+  <!-- Route Guard Breach / Violent Rejection Alert Banner -->
+  <aside id="violent-rejection-banner" class="rejection-banner" style="display: none;" role="alert">
+    <div class="rejection-header font-mono">
+      🚨 [SECURITY PERIMETER BREACH :: VIOLENT REJECTION]
+    </div>
+    <div id="rejection-message" class="rejection-body font-mono">
+      HTTP 401 Unauthorized :: Access to protected controller route was violently rejected by AuthMiddleware. Missing or invalid Bearer token.
+    </div>
+    <button id="btn-dismiss-rejection" class="skeleton-btn btn-sm">Acknowledge Breach Alert</button>
+  </aside>
+
+  <!-- Navigation / Route Guards -->
+  <nav class="skeleton-nav font-mono" aria-label="Route Guard Navigation">
+    <span>ROUTE GUARDS:</span>
+    <button class="nav-btn active" data-route="overview">/overview (Public)</button>
+    <button class="nav-btn" data-route="shipments">/shipments (Protected [JWT])</button>
+    <button class="nav-btn" data-route="telemetry">/telemetry (Protected [JWT])</button>
+    <button class="nav-btn" data-route="ci-cd">/ci-cd-pipeline (Spec)</button>
+  </nav>
+
+  <!-- Main Work Area -->
+  <main class="skeleton-main">
+
+    <!-- SECTION: Secure Authentication Perimeter (Phase 2) -->
+    <section class="skeleton-box" id="section-auth-perimeter">
+      <h2 class="box-title font-mono">[ PHASE 2: SECURE AUTHENTICATION PERIMETER ]</h2>
+      <p class="box-desc">
+        All sensitive backend controllers and client views are enclosed within a zero-trust perimeter. Unauthenticated requests are violently rejected by route guards and backend middleware.
+      </p>
+
+      <div class="auth-grid">
+        <!-- Login Form -->
+        <div class="auth-form-card">
+          <h3 class="card-title font-mono">&gt; CONTROLLER AUTHENTICATION (POST /api/auth/login)</h3>
+          <form id="login-form">
+            <div class="form-row">
+              <label for="input-username" class="font-mono">Username:</label>
+              <input type="text" id="input-username" class="skeleton-input font-mono" value="dispatcher_elena" required>
+            </div>
+            <div class="form-row">
+              <label for="input-password" class="font-mono">Password:</label>
+              <input type="password" id="input-password" class="skeleton-input font-mono" value="admin123" required>
+            </div>
+            <div class="btn-group">
+              <button type="submit" id="btn-login" class="skeleton-btn btn-primary font-mono">
+                [ AUTHENTICATE (JWT) ]
+              </button>
+              <button type="button" id="btn-logout" class="skeleton-btn font-mono" disabled>
+                [ LOGOUT ]
+              </button>
+              <button type="button" id="btn-simulate-forged-token" class="skeleton-btn btn-danger font-mono" title="Inject a forged/tampered token to verify violent rejection">
+                [ TEST VIOLENT REJECTION (FORGED JWT) ]
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Token Inspector -->
+        <div class="token-inspector-card font-mono">
+          <h3 class="card-title">&gt; ACTIVE JWT TOKEN INSPECTOR</h3>
+          <div class="token-box" id="token-display">
+            NO ACTIVE TOKEN PRESENT. PERIMETER IS LOCKED.
+          </div>
+          <div class="token-claims" id="claims-display">
+            Decoded Claims: null
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROUTE VIEW 1: Overview -->
+    <div id="view-overview" class="route-view active">
+      <section class="skeleton-box">
+        <h2 class="box-title font-mono">[ WALKING SKELETON :: SYSTEM TOPOLOGY ]</h2>
+        <div class="topology-grid font-mono">
+          <div class="topo-node">
+            <h4>CLIENT ROUTE GUARD</h4>
+            <p>Intercepts path transitions. Violently blocks navigation to protected routes unless valid JWT is in local memory.</p>
+          </div>
+          <div class="topo-arrow">&rarr; HTTP/Bearer &rarr;</div>
+          <div class="topo-node">
+            <h4>BACKEND CONTROLLERS</h4>
+            <p>Express API controllers mounted on /api. authMiddleware intercepts incoming headers before routing.</p>
+          </div>
+          <div class="topo-arrow">&rarr; Mutate/Query &rarr;</div>
+          <div class="topo-node">
+            <h4>3NF DATABASE MODEL</h4>
+            <p>In-memory relational data store persisting shipments, users, audit logs, and telemetry frames.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ROUTE VIEW 2: Shipments (Phase 1 Core Infrastructure) -->
+    <div id="view-shipments" class="route-view">
+      <section class="skeleton-box">
+        <h2 class="box-title font-mono">[ PHASE 1: CORE INFRASTRUCTURE DATA FLOW ]</h2>
+        <p class="box-desc">
+          Frontend routes connected directly to backend controllers. Data flows from the client form to the controller, validates constraints, and commits into the database.
+        </p>
+
+        <!-- Create Shipment Form -->
+        <div class="pipeline-card">
+          <h3 class="card-title font-mono">&gt; DISPATCH NEW FREIGHT SHIPMENT (POST /api/shipments)</h3>
+          <form id="create-shipment-form">
+            <div class="form-cols">
+              <div class="form-row">
+                <label for="ship-tracking" class="font-mono">Tracking #:</label>
+                <input type="text" id="ship-tracking" class="skeleton-input font-mono" placeholder="ATX-2026-103" required>
+              </div>
+              <div class="form-row">
+                <label for="ship-origin" class="font-mono">Origin Depot:</label>
+                <input type="text" id="ship-origin" class="skeleton-input font-mono" placeholder="Boston Life Sciences Hub, MA" required>
+              </div>
+              <div class="form-row">
+                <label for="ship-destination" class="font-mono">Destination Hub:</label>
+                <input type="text" id="ship-destination" class="skeleton-input font-mono" placeholder="Manhattan Medical Depot, NY" required>
+              </div>
+              <div class="form-row">
+                <label for="ship-cargo" class="font-mono">Cargo Classification:</label>
+                <select id="ship-cargo" class="skeleton-input font-mono">
+                  <option value="COLD_CHAIN_PHARMA">COLD_CHAIN_PHARMA</option>
+                  <option value="HIGH_VALUE_ELECTRONICS">HIGH_VALUE_ELECTRONICS</option>
+                  <option value="HAZARDOUS_MATERIALS">HAZARDOUS_MATERIALS</option>
+                  <option value="DRY_GOODS">DRY_GOODS</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label for="ship-weight" class="font-mono">Weight (kg):</label>
+                <input type="number" id="ship-weight" class="skeleton-input font-mono" value="4500" required>
+              </div>
+            </div>
+            <button type="submit" id="btn-submit-shipment" class="skeleton-btn btn-primary font-mono mt-2">
+              [ COMMIT RECORD TO DATABASE (POST /api/shipments) ]
+            </button>
+          </form>
+          <div id="shipment-status-line" class="status-line font-mono mt-2" style="display: none;"></div>
+        </div>
+
+        <!-- Database Records Table -->
+        <div class="table-card mt-3">
+          <div class="table-header-row">
+            <h3 class="card-title font-mono">&gt; COMMITTED DATABASE RECORDS (GET /api/shipments)</h3>
+            <button id="btn-refresh-shipments" class="skeleton-btn btn-sm font-mono">[ Refresh Query ]</button>
+          </div>
+          <table class="skeleton-table font-mono" id="table-shipments">
+            <thead>
+              <tr>
+                <th>TRACKING_NUMBER</th>
+                <th>ORIGIN</th>
+                <th>DESTINATION</th>
+                <th>CARGO_CLASS</th>
+                <th>WEIGHT_KG</th>
+                <th>STATUS</th>
+                <th>CREATED_AT</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-shipments">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ROUTE VIEW 3: Telemetry Stream -->
+    <div id="view-telemetry" class="route-view">
+      <section class="skeleton-box">
+        <h2 class="box-title font-mono">[ HIGH-THROUGHPUT TELEMETRY INGESTION PIPELINE ]</h2>
+        <div class="pipeline-card">
+          <h3 class="card-title font-mono">&gt; EMIT SENSOR FRAME (POST /api/telemetry/ingest)</h3>
+          <form id="telemetry-form" class="form-cols">
+            <div class="form-row">
+              <label for="tel-vehicle" class="font-mono">Vehicle ID:</label>
+              <input type="text" id="tel-vehicle" class="skeleton-input font-mono" value="veh_8802" required>
+            </div>
+            <div class="form-row">
+              <label for="tel-lat" class="font-mono">Latitude:</label>
+              <input type="number" step="0.0001" id="tel-lat" class="skeleton-input font-mono" value="42.3601" required>
+            </div>
+            <div class="form-row">
+              <label for="tel-lng" class="font-mono">Longitude:</label>
+              <input type="number" step="0.0001" id="tel-lng" class="skeleton-input font-mono" value="-71.0589" required>
+            </div>
+            <div class="form-row">
+              <label for="tel-speed" class="font-mono">Speed (km/h):</label>
+              <input type="number" id="tel-speed" class="skeleton-input font-mono" value="92" required>
+            </div>
+            <div class="form-row">
+              <label for="tel-temp" class="font-mono">Cargo Temp (°C):</label>
+              <input type="number" step="0.1" id="tel-temp" class="skeleton-input font-mono" value="-18.2" required>
+            </div>
+            <div class="form-row full-width">
+              <button type="submit" class="skeleton-btn btn-primary font-mono mt-1">
+                [ INGEST TELEMETRY FRAME ]
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="table-card mt-3">
+          <h3 class="card-title font-mono">&gt; BUFFERED SENSOR STREAM IN DATA LAYER (GET /api/telemetry)</h3>
+          <table class="skeleton-table font-mono" id="table-telemetry">
+            <thead>
+              <tr>
+                <th>FRAME_ID</th>
+                <th>VEHICLE_ID</th>
+                <th>LATITUDE</th>
+                <th>LONGITUDE</th>
+                <th>SPEED</th>
+                <th>CARGO_TEMP</th>
+                <th>TIMESTAMP</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-telemetry">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ROUTE VIEW 4: CI/CD Pipeline Spec (Phase 3) -->
+    <div id="view-ci-cd" class="route-view">
+      <section class="skeleton-box">
+        <h2 class="box-title font-mono">[ PHASE 3: AUTOMATED CI/CD GITHUB ACTIONS PIPELINE ]</h2>
+        <p class="box-desc">
+          Automated multi-stage continuous integration pipeline configured via <code>.github/workflows/ci-cd.yml</code>. Runs on every push to <code>main</code> branch with automated test gates.
+        </p>
+
+        <div class="cicd-pipeline-flow font-mono">
+          <div class="cicd-step">
+            <span class="step-badge badge-ok">PASS</span>
+            <strong>Stage 1: Lint & Audit</strong>
+            <p>Runs static code analysis via <code>npm run lint</code>. Checks syntax integrity and forbidden patterns.</p>
+          </div>
+          <div class="cicd-arrow">&rarr;</div>
+          <div class="cicd-step">
+            <span class="step-badge badge-ok">PASS</span>
+            <strong>Stage 2: Test Suite (Gate)</strong>
+            <p>Executes 11 automated unit tests across Auth, Route Guards, Shipments Controller, and Telemetry buffer. If ANY test fails, deployment is ABORTED.</p>
+          </div>
+          <div class="cicd-arrow">&rarr;</div>
+          <div class="cicd-step">
+            <span class="step-badge badge-ok">PASS</span>
+            <strong>Stage 3: Build & Deploy</strong>
+            <p>Only triggered if tests pass. Packages and deploys production artifacts directly to the edge network.</p>
+          </div>
+        </div>
+
+        <div class="code-box mt-3 font-mono">
+Workflow: .github/workflows/ci-cd.yml
+Triggers: push to [main, master]
+Gate Policy: deploy.needs = [lint-and-audit, test-suite]
+Optimization: Node.js dependency caching + lightweight native test runner (&lt;200ms execution)
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Skeleton Footer -->
+  <footer class="skeleton-footer font-mono">
+    <div>Sprint 14: Capstone Phase — The Walking Skeleton | Prodesk IT Engineering Assessment</div>
+    <div>Candidate: <strong>Himesh Singh</strong> (PDIT-FTE-11462) | Edge Production Deployment</div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

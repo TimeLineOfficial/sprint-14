@@ -1,0 +1,101 @@
+name: Automated CI/CD Pipeline (Sprint 14 Walking Skeleton)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "ci-cd-sprint-14"
+  cancel-in-progress: false
+
+jobs:
+  # ==========================================================================
+  # Stage 1: Static Analysis, Linting & Code Quality Audit
+  # ==========================================================================
+  lint-and-code-quality:
+    name: "Stage 1: Lint & Code Quality Audit"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Runtime (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Production & Test Dependencies
+        run: npm install
+
+      - name: Execute Static Linter
+        run: npm run lint
+
+  # ==========================================================================
+  # Stage 2: Automated Unit Test Suite Execution (Mandatory Test Gate)
+  # ==========================================================================
+  test-suite-execution:
+    name: "Stage 2: Test Suite Execution (Gate)"
+    runs-on: ubuntu-latest
+    needs: [lint-and-code-quality]
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Runtime (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Test Suite (Auth, Middleware, Shipments, Telemetry)
+        run: npm test
+
+  # ==========================================================================
+  # Stage 3: Automated Build & Production Edge Deployment (Only if Tests Pass)
+  # ==========================================================================
+  build-and-deploy:
+    name: "Stage 3: Production Build & Deploy"
+    runs-on: ubuntu-latest
+    needs: [lint-and-code-quality, test-suite-execution]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Execute Build Script
+        run: npm run build
+
+      - name: Setup GitHub Pages Environment
+        uses: actions/configure-pages@v5
+
+      - name: Upload Production Web Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './public'
+
+      - name: Deploy to Production Edge Network
+        id: deployment
+        uses: actions/deploy-pages@v4

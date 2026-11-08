@@ -1,0 +1,22 @@
+==============================================================================
+Sprint 14 Capstone Phase: The Walking Skeleton (MVP) Submission Links
+Candidate: Himesh Singh (PDIT-FTE-11462)
+Directive: Sprint 14 — Capstone Phase: The Walking Skeleton
+Submission Code: FTEWSVE | PDIT-FTE-11462 | Sprint 14 Submission
+==============================================================================
+
+1. GitHub Repository URL:
+https://github.com/TimeLineOfficial/sprint-14
+
+2. Live Edge Deployment URL:
+https://timelineofficial.github.io/sprint-14/
+
+3. Video Walkthrough URL:
+https://youtu.be/vdJoz7cA2Sg
+
+==============================================================================
+Phase Deliverables Overview:
+• Phase 1: Core Infrastructure Implementation (Client -> Controller -> Database)
+• Phase 2: Secure Authentication Perimeter (JWT & Violent Rejection Route Guards)
+• Phase 3: Automated CI/CD Pipeline (.github/workflows/ci-cd.yml with Test Gate)
+==============================================================================
