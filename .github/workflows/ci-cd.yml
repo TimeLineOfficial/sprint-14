@@ -12,8 +12,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "ci-cd-sprint-14"
@@ -66,21 +64,17 @@ jobs:
         run: npm test
 
   # ==========================================================================
-  # Stage 3: Automated Build & Production Edge Deployment (Only if Tests Pass)
+  # Stage 3: Automated Build & Production Artifact Packaging (Only if Tests Pass)
   # ==========================================================================
   build-and-deploy:
-    name: "Stage 3: Production Build & Deploy"
+    name: "Stage 3: Production Build & Artifact Packaging"
     runs-on: ubuntu-latest
     needs: [lint-and-code-quality, test-suite-execution]
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js Runtime
+      - name: Setup Node.js Runtime (v20)
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -88,14 +82,12 @@ jobs:
       - name: Execute Build Script
         run: npm run build
 
-      - name: Setup GitHub Pages Environment
-        uses: actions/configure-pages@v5
-
-      - name: Upload Production Web Artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload Production Edge Artifact
+        uses: actions/upload-artifact@v4
         with:
-          path: './public'
-
-      - name: Deploy to Production Edge Network
-        id: deployment
-        uses: actions/deploy-pages@v4
+          name: walking-skeleton-edge-build
+          path: |
+            public/
+            server.js
+            package.json
+          retention-days: 14
